@@ -15,10 +15,11 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- ===== HEADER ===== -->
     <header class="main-header">
         <div class="header-container">
 
+            <!-- College Info -->
             <div class="logo-section">
 
                 <div class="pcce-logo-container">
@@ -32,6 +33,7 @@
 
                 <div class="header-divider"></div>
 
+                <!-- Virtual Labs -->
                 <div class="virtual-labs-logo">
                     <i class="fas fa-flask"></i>
                     <h1>Virtual <span>Lab</span></h1>
@@ -39,6 +41,7 @@
 
             </div>
 
+            <!-- User Info -->
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span>Welcome, Student</span>
@@ -47,9 +50,10 @@
         </div>
     </header>
 
+    <!-- ===== PAGE WRAPPER WITH SIDEBAR ===== -->
     <div class="page-wrapper">
 
-        <!-- Sidebar -->
+        <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <a href="../home.html" class="nav-item">
@@ -67,10 +71,6 @@
                 <a href="pre-test.html" class="nav-item active">
                     <i class="fas fa-question-circle"></i>
                     <span>Pre-test</span>
-                </a>
-                <a href="assignment.html" class="nav-item">
-                    <i class="fa fa-check"></i>
-                    <span>Assignment</span>
                 </a>
                 <a href="simulation.html" class="nav-item">
                     <i class="fas fa-desktop"></i>
@@ -95,7 +95,7 @@
             </nav>
         </aside>
 
-        <!-- Pretest Content -->
+        <!-- Main Content -->
         <main class="container home-content">
 
             <div class="content-header">
@@ -103,9 +103,10 @@
                 <p>Test your understanding before the experiment</p>
             </div>
 
+            <!-- Pre-test Content -->
             <div class="pretest-content">
 
-                <!-- Quiz  -->
+                <!-- Quiz Container -->
                 <div id="quiz-container">
 
                     <div class="question-card" data-question="1">
@@ -114,24 +115,24 @@
                             <i class="fas fa-question-circle"></i>
                         </div>
                         <p class="question-text">
-                            What is the main purpose of a Karnaugh Map (K-Map)?
+                            What is the binary representation of decimal number 5?
                         </p>
                         <ul class="options-list">
-                            <li class="option" data-answer="A" onclick="selectOption(1, 'A', false)">
+                            <li class="option" data-answer="A" onclick="selectOption(1, 'A', true)">
                                 <span class="option-label">A)</span>
-                                <span>To draw digital circuits physically</span>
+                                <span>101</span>
                             </li>
-                            <li class="option" data-answer="B" onclick="selectOption(1, 'B', true)">
+                            <li class="option" data-answer="B" onclick="selectOption(1, 'B', false)">
                                 <span class="option-label">B)</span>
-                                <span>To simplify Boolean expressions</span>
+                                <span>110</span>
                             </li>
                             <li class="option" data-answer="C" onclick="selectOption(1, 'C', false)">
                                 <span class="option-label">C)</span>
-                                <span>To convert decimal numbers to binary</span>
+                                <span>100</span>
                             </li>
                             <li class="option" data-answer="D" onclick="selectOption(1, 'D', false)">
                                 <span class="option-label">D)</span>
-                                <span>To calculate arithmetic operations</span>
+                                <span>111</span>
                             </li>
                         </ul>
                         <div class="feedback" style="display: none;"></div>
@@ -143,24 +144,24 @@
                             <i class="fas fa-question-circle"></i>
                         </div>
                         <p class="question-text">
-                            For a 3-variable K-Map, how many cells are there?
+                            How many possible combinations exist for 2 binary variables (A, B)?
                         </p>
                         <ul class="options-list">
                             <li class="option" data-answer="A" onclick="selectOption(2, 'A', false)">
                                 <span class="option-label">A)</span>
-                                <span>4</span>
+                                <span>2</span>
                             </li>
                             <li class="option" data-answer="B" onclick="selectOption(2, 'B', false)">
                                 <span class="option-label">B)</span>
-                                <span>6</span>
+                                <span>3</span>
                             </li>
                             <li class="option" data-answer="C" onclick="selectOption(2, 'C', true)">
                                 <span class="option-label">C)</span>
-                                <span>8</span>
+                                <span>4</span>
                             </li>
                             <li class="option" data-answer="D" onclick="selectOption(2, 'D', false)">
                                 <span class="option-label">D)</span>
-                                <span>16</span>
+                                <span>8</span>
                             </li>
                         </ul>
                         <div class="feedback" style="display: none;"></div>
@@ -172,24 +173,24 @@
                             <i class="fas fa-question-circle"></i>
                         </div>
                         <p class="question-text">
-                            Which of the following minterms is valid for a 2-variable K-Map?
+                            Which of the following is a basic logic gate?
                         </p>
                         <ul class="options-list">
-                            <li class="option" data-answer="A" onclick="selectOption(3, 'A', true)">
+                            <li class="option" data-answer="A" onclick="selectOption(3, 'A', false)">
                                 <span class="option-label">A)</span>
-                                <span>3</span>
+                                <span>AND</span>
                             </li>
                             <li class="option" data-answer="B" onclick="selectOption(3, 'B', false)">
                                 <span class="option-label">B)</span>
-                                <span>4</span>
+                                <span>XOR</span>
                             </li>
                             <li class="option" data-answer="C" onclick="selectOption(3, 'C', false)">
                                 <span class="option-label">C)</span>
-                                <span>5</span>
+                                <span>NAND</span>
                             </li>
-                            <li class="option" data-answer="D" onclick="selectOption(3, 'D', false)">
+                            <li class="option" data-answer="D" onclick="selectOption(3, 'D', true)">
                                 <span class="option-label">D)</span>
-                                <span>6</span>
+                                <span>All of the above</span>
                             </li>
                         </ul>
                         <div class="feedback" style="display: none;"></div>
@@ -201,24 +202,198 @@
                             <i class="fas fa-question-circle"></i>
                         </div>
                         <p class="question-text">
-                            What does a '1' in a K-Map cell represent?
+                            What is the output of AND gate when inputs are A=1, B=0?
                         </p>
                         <ul class="options-list">
                             <li class="option" data-answer="A" onclick="selectOption(4, 'A', false)">
                                 <span class="option-label">A)</span>
-                                <span>The variable is always false</span>
+                                <span>1</span>
                             </li>
                             <li class="option" data-answer="B" onclick="selectOption(4, 'B', true)">
                                 <span class="option-label">B)</span>
-                                <span>A minterm that makes the function true</span>
+                                <span>0</span>
                             </li>
                             <li class="option" data-answer="C" onclick="selectOption(4, 'C', false)">
                                 <span class="option-label">C)</span>
-                                <span>An invalid input</span>
+                                <span>Undefined</span>
                             </li>
                             <li class="option" data-answer="D" onclick="selectOption(4, 'D', false)">
                                 <span class="option-label">D)</span>
-                                <span>The variable is redundant</span>
+                                <span>Depends on circuit</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <div class="question-card" data-question="5">
+                        <div class="question-header">
+                            <span class="question-number">Question 5</span>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <p class="question-text">
+                            What is the output of OR gate when inputs are A=0, B=0?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(5, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>1</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(5, 'B', true)">
+                                <span class="option-label">B)</span>
+                                <span>0</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(5, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>Undefined</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(5, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>2</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <div class="question-card" data-question="6">
+                        <div class="question-header">
+                            <span class="question-number">Question 6</span>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <p class="question-text">
+                            What is the output of NOT gate when input is A=1?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(6, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>1</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(6, 'B', true)">
+                                <span class="option-label">B)</span>
+                                <span>0</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(6, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>A</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(6, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>Undefined</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <div class="question-card" data-question="7">
+                        <div class="question-header">
+                            <span class="question-number">Question 7</span>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <p class="question-text">
+                            How many rows are there in the truth table of 3 variables?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(7, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>3</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(7, 'B', false)">
+                                <span class="option-label">B)</span>
+                                <span>6</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(7, 'C', true)">
+                                <span class="option-label">C)</span>
+                                <span>8</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(7, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>9</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <div class="question-card" data-question="8">
+                        <div class="question-header">
+                            <span class="question-number">Question 8</span>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <p class="question-text">
+                            What does a minterm represent?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(8, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>A simplified expression</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(8, 'B', true)">
+                                <span class="option-label">B)</span>
+                                <span>A combination where output is 1</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(8, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>A combination where output is 0</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(8, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>A logic gate</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <div class="question-card" data-question="9">
+                        <div class="question-header">
+                            <span class="question-number">Question 9</span>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <p class="question-text">
+                            Which number system is used in digital electronics?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(9, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>Decimal</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(9, 'B', true)">
+                                <span class="option-label">B)</span>
+                                <span>Binary</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(9, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>Hexadecimal</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(9, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>Roman</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <div class="question-card" data-question="10">
+                        <div class="question-header">
+                            <span class="question-number">Question 10</span>
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <p class="question-text">
+                            What is the complement of A (A') if A = 0?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(10, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>0</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(10, 'B', true)">
+                                <span class="option-label">B)</span>
+                                <span>1</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(10, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>A</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(10, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>Undefined</span>
                             </li>
                         </ul>
                         <div class="feedback" style="display: none;"></div>
@@ -262,7 +437,7 @@
 
     </div>
 
-    <!-- FOOTER -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <p>
             Virtual Labs © 2025 | Applied Sciences & Humanities Department |
@@ -271,22 +446,25 @@
     </footer>
 
     <script>
-
+        // Store user answers
         let userAnswers = {};
-        let totalQuestions = 4;
+        let totalQuestions = 10;
 
         function selectOption(questionNum, answer, isCorrect) {
-
+            // Get all options for this question
             const questionCard = document.querySelector(`[data-question="${questionNum}"]`);
             const options = questionCard.querySelectorAll('.option');
 
+            // Remove selected class from all options
             options.forEach(opt => {
                 opt.classList.remove('selected');
             });
 
+            // Add selected class to clicked option
             const selectedOption = questionCard.querySelector(`[data-answer="${answer}"]`);
             selectedOption.classList.add('selected');
 
+            // Store the answer
             userAnswers[questionNum] = {
                 selected: answer,
                 isCorrect: isCorrect
@@ -294,12 +472,13 @@
         }
 
         function submitQuiz() {
-
+            // Check if all questions are answered
             if (Object.keys(userAnswers).length < totalQuestions) {
                 alert('Please answer all questions before submitting!');
                 return;
             }
 
+            // Calculate score
             let correctCount = 0;
             for (let q in userAnswers) {
                 if (userAnswers[q].isCorrect) {
@@ -307,26 +486,29 @@
                 }
             }
 
+            // Show correct/incorrect feedback
             for (let i = 1; i <= totalQuestions; i++) {
                 const questionCard = document.querySelector(`[data-question="${i}"]`);
                 const options = questionCard.querySelectorAll('.option');
                 const feedback = questionCard.querySelector('.feedback');
 
                 options.forEach(opt => {
-                    opt.style.pointerEvents = 'none';
+                    opt.style.pointerEvents = 'none'; // Disable clicking
 
-                    const answer = opt.getAttribute('data-answer');
+                    // Highlight correct answer
                     const isCorrect = opt.onclick.toString().includes('true');
 
                     if (isCorrect) {
                         opt.classList.add('correct-answer');
                     }
 
+                    // Show if user's answer was wrong
                     if (opt.classList.contains('selected') && !userAnswers[i].isCorrect) {
                         opt.classList.add('wrong-answer');
                     }
                 });
 
+                // Show feedback
                 if (userAnswers[i].isCorrect) {
                     feedback.innerHTML = '<i class="fas fa-check-circle"></i> Correct!';
                     feedback.className = 'feedback correct-feedback';
@@ -352,17 +534,19 @@
             }
             document.getElementById('score-message').textContent = message;
 
+            // Hide submit button and show results
             document.querySelector('.submit-section').style.display = 'none';
             document.getElementById('results-section').style.display = 'block';
 
+            // Scroll to results
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function retryQuiz() {
-
+            // Reset everything
             userAnswers = {};
 
-
+            // Reset all question cards
             document.querySelectorAll('.question-card').forEach(card => {
                 const options = card.querySelectorAll('.option');
                 options.forEach(opt => {
@@ -374,10 +558,11 @@
                 feedback.style.display = 'none';
             });
 
-
+            // Hide results and show submit button
             document.getElementById('results-section').style.display = 'none';
             document.querySelector('.submit-section').style.display = 'block';
 
+            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
