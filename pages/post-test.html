@@ -104,6 +104,7 @@
 
                 <div id="quiz-container">
 
+                    <!-- Question 1 -->
                     <div class="question-card" data-question="1">
                         <div class="question-header">
                             <span class="question-number">Question 1</span>
@@ -133,6 +134,7 @@
                         <div class="feedback" style="display: none;"></div>
                     </div>
 
+                    <!-- Question 2 -->
                     <div class="question-card" data-question="2">
                         <div class="question-header">
                             <span class="question-number">Question 2</span>
@@ -162,6 +164,7 @@
                         <div class="feedback" style="display: none;"></div>
                     </div>
 
+                    <!-- Question 3 -->
                     <div class="question-card" data-question="3">
                         <div class="question-header">
                             <span class="question-number">Question 3</span>
@@ -191,6 +194,7 @@
                         <div class="feedback" style="display: none;"></div>
                     </div>
 
+                    <!-- Question 4 -->
                     <div class="question-card" data-question="4">
                         <div class="question-header">
                             <span class="question-number">Question 4</span>
@@ -220,6 +224,186 @@
                         <div class="feedback" style="display: none;"></div>
                     </div>
 
+                    <!-- Question 5 -->
+                    <div class="question-card" data-question="5">
+                        <div class="question-header">
+                            <span class="question-number">Question 5</span>
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <p class="question-text">
+                            In K-Map simplification, groups (implicants) must contain how many cells?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(5, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>Any number of cells</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(5, 'B', false)">
+                                <span class="option-label">B)</span>
+                                <span>Only odd numbers of cells</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(5, 'C', true)">
+                                <span class="option-label">C)</span>
+                                <span>A power of 2 (1, 2, 4, 8, 16, ...)</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(5, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>Multiples of 3</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question-card" data-question="6">
+                        <div class="question-header">
+                            <span class="question-number">Question 6</span>
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <p class="question-text">
+                            What is the purpose of 'don't care' conditions (denoted by 'X' or 'd') in a K-Map?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(6, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>They represent invalid Boolean expressions</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(6, 'B', false)">
+                                <span class="option-label">B)</span>
+                                <span>They must always be grouped as 1s</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(6, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>They must always be grouped as 0s</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(6, 'D', true)">
+                                <span class="option-label">D)</span>
+                                <span>They can be treated as either 0 or 1 to form larger groups for better minimization</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question-card" data-question="7">
+                        <div class="question-header">
+                            <span class="question-number">Question 7</span>
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <p class="question-text">
+                            In a 4-variable K-Map with variables A, B, C, D, a group of four 1s covers minterms 0, 1, 4, 5. What is the simplified Boolean expression for this group?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(7, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>A'B</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(7, 'B', true)">
+                                <span class="option-label">B)</span>
+                                <span>A'B'</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(7, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>AB'</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(7, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>CD'</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question-card" data-question="8">
+                        <div class="question-header">
+                            <span class="question-number">Question 8</span>
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <p class="question-text">
+                            In K-Map simplification, larger groups of 1s result in:
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(8, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>More complex Boolean expressions</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(8, 'B', true)">
+                                <span class="option-label">B)</span>
+                                <span>Simpler Boolean expressions with fewer variables</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(8, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>More variables in the final expression</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(8, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>No change in the Boolean expression</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question-card" data-question="9">
+                        <div class="question-header">
+                            <span class="question-number">Question 9</span>
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <p class="question-text">
+                            Which cells are grouped together in a K-Map to obtain a simplified SOP (Sum of Products) expression?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(9, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>Cells containing 0s</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(9, 'B', false)">
+                                <span class="option-label">B)</span>
+                                <span>Cells containing don't cares only</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(9, 'C', true)">
+                                <span class="option-label">C)</span>
+                                <span>Cells containing 1s (and optionally don't cares)</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(9, 'D', false)">
+                                <span class="option-label">D)</span>
+                                <span>All cells regardless of their value</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question-card" data-question="10">
+                        <div class="question-header">
+                            <span class="question-number">Question 10</span>
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <p class="question-text">
+                            A 2-variable K-Map with variables A and B has a single group covering all four cells (minterms 0, 1, 2, 3). What is the simplified Boolean expression?
+                        </p>
+                        <ul class="options-list">
+                            <li class="option" data-answer="A" onclick="selectOption(10, 'A', false)">
+                                <span class="option-label">A)</span>
+                                <span>A + B</span>
+                            </li>
+                            <li class="option" data-answer="B" onclick="selectOption(10, 'B', false)">
+                                <span class="option-label">B)</span>
+                                <span>AB</span>
+                            </li>
+                            <li class="option" data-answer="C" onclick="selectOption(10, 'C', false)">
+                                <span class="option-label">C)</span>
+                                <span>A'B'</span>
+                            </li>
+                            <li class="option" data-answer="D" onclick="selectOption(10, 'D', true)">
+                                <span class="option-label">D)</span>
+                                <span>1 (always true)</span>
+                            </li>
+                        </ul>
+                        <div class="feedback" style="display: none;"></div>
+                    </div>
+
                 </div>
 
                 <div class="submit-section">
@@ -238,7 +422,7 @@
                         <div class="results-body">
                             <div class="score-display">
                                 <span class="score-label">Your Score:</span>
-                                <span class="score-value" id="score-value">0/4</span>
+                                <span class="score-value" id="score-value">0/10</span>
                             </div>
                             <div class="score-percentage" id="score-percentage">0%</div>
                             <p class="score-message" id="score-message"></p>
@@ -262,7 +446,7 @@
 
     </div>
 
-    <!----> FOOTER -->
+    <!-- FOOTER -->
     <footer>
         <p>
             Virtual Labs © 2025 | Applied Sciences & Humanities Department |
@@ -272,18 +456,15 @@
 
     <script>
         let userAnswers = {};
-        let totalQuestions = 4;
+        let totalQuestions = 10;
 
         function selectOption(questionNum, answer, isCorrect) {
-
             const questionCard = document.querySelector(`[data-question="${questionNum}"]`);
             const options = questionCard.querySelectorAll('.option');
-
 
             options.forEach(opt => {
                 opt.classList.remove('selected');
             });
-
 
             const selectedOption = questionCard.querySelector(`[data-answer="${answer}"]`);
             selectedOption.classList.add('selected');
@@ -295,7 +476,6 @@
         }
 
         function submitQuiz() {
-
             if (Object.keys(userAnswers).length < totalQuestions) {
                 alert('Please answer all questions before submitting!');
                 return;
@@ -316,7 +496,6 @@
                 options.forEach(opt => {
                     opt.style.pointerEvents = 'none';
 
-                    const answer = opt.getAttribute('data-answer');
                     const isCorrect = opt.onclick.toString().includes('true');
 
                     if (isCorrect) {
@@ -338,7 +517,6 @@
                 feedback.style.display = 'block';
             }
 
-            // Display results
             const percentage = (correctCount / totalQuestions) * 100;
             document.getElementById('score-value').textContent = `${correctCount}/${totalQuestions}`;
             document.getElementById('score-percentage').textContent = `${percentage.toFixed(0)}%`;
@@ -356,14 +534,11 @@
             document.querySelector('.submit-section').style.display = 'none';
             document.getElementById('results-section').style.display = 'block';
 
-
             document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function retryQuiz() {
-
             userAnswers = {};
-
 
             document.querySelectorAll('.question-card').forEach(card => {
                 const options = card.querySelectorAll('.option');
@@ -378,7 +553,6 @@
 
             document.getElementById('results-section').style.display = 'none';
             document.querySelector('.submit-section').style.display = 'block';
-
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
