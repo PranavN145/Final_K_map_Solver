@@ -1134,6 +1134,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 10px;
+    min-width: 0;
     color: #2c3e50;
     font-size: 15px;
 }
@@ -1147,6 +1148,7 @@ footer {
 .detail-item a {
     color: #3498db;
     text-decoration: none;
+    overflow-wrap: anywhere;
     transition: all 0.3s ease;
 }
 
@@ -1157,7 +1159,7 @@ footer {
 
 .developers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: 20px;
 }
 
