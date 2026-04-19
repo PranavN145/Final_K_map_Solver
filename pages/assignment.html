@@ -3,112 +3,1526 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Aim | K-Map Solver</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Simulation | K-Map Solver</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* ── Mode Selection ── */
+        .sim-intro {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .sim-intro p {
+            color: #555;
+            font-size: 15px;
+            margin-top: 6px;
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 10px;
+        }
+
+        .mode-card {
+            background: #fff;
+            border: 2px solid #e0e8f0;
+            border-radius: 12px;
+            padding: 28px 20px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
+        }
+
+        .mode-card:hover {
+            border-color: #3498db;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.18);
+            transform: translateY(-3px);
+        }
+
+        .mode-card .mode-icon {
+            font-size: 34px;
+            color: #3498db;
+            margin-bottom: 12px;
+        }
+
+        .mode-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+
+        .mode-card p {
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+
+        .mode-card.selected {
+            border-color: #3498db;
+            background: #eaf4fc;
+        }
+
+        #simulator {
+            display: none;
+        }
+
+        .sim-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .problem-badge {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .back-btn {
+            background: none;
+            border: 2px solid #bdc3c7;
+            color: #555;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .progress-bar-wrap {
+            background: #e8eef3;
+            border-radius: 8px;
+            height: 8px;
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #27ae60);
+            border-radius: 8px;
+            transition: width 0.4s ease;
+        }
+
+        .step-indicators {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e0e8f0;
+            color: #aaa;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e0e8f0;
+            transition: all 0.3s;
+        }
+
+        .step-dot.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .step-dot.done {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 12px;
+            border: 1.5px solid #e0e8f0;
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+            padding: 30px 32px;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        .step-card.active {
+            display: block;
+        }
+
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eaf4fc;
+            color: #1a5276;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 14px;
+        }
+
+        .step-label .step-num {
+            background: #3498db;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .step-question {
+            font-size: 17px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .sim-input {
+            border: 2px solid #d5e8f3;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 16px;
+            color: #2c3e50;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 200px;
+            background: #fafcff;
+        }
+
+        .sim-input:focus {
+            border-color: #3498db;
+        }
+
+        .sim-input.correct {
+            border-color: #27ae60;
+            background: #eafaf1;
+        }
+
+        .sim-input.wrong {
+            border-color: #e74c3c;
+            background: #fdf2f2;
+        }
+
+        .step-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.35);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-hint {
+            background: #fff;
+            border: 2px solid #f39c12;
+            color: #f39c12;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s;
+        }
+
+        .btn-hint:hover {
+            background: #fff8e1;
+        }
+
+        .btn-solution {
+            background: #fff;
+            border: 2px solid #9b59b6;
+            color: #9b59b6;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s;
+        }
+
+        .btn-solution:hover {
+            background: #f5eef8;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s;
+            display: none;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.35);
+        }
+
+        .feedback-box {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 14px;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct {
+            background: #eafaf1;
+            border: 1.5px solid #82e0aa;
+            color: #1e8449;
+        }
+
+        .feedback-box.wrong {
+            background: #fdf2f2;
+            border: 1.5px solid #f1948a;
+            color: #922b21;
+        }
+
+        .feedback-box.hint {
+            background: #fff8e1;
+            border: 1.5px solid #f9ca6f;
+            color: #7d6608;
+        }
+
+        .kmap-wrap {
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        .kmap-table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        .kmap-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            min-width: 52px;
+            border: 2px solid #1a252f;
+        }
+
+        .kmap-table th.corner {
+            background: #1a252f;
+        }
+
+        .kmap-table th.row-header {
+            background: #34495e;
+        }
+
+        .kmap-cell {
+            width: 64px;
+            height: 64px;
+            border: 2px solid #bdc3c7;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s;
+            background: #fafcff;
+            color: #7f8c8d;
+            user-select: none;
+            position: relative;
+        }
+
+        .kmap-cell:hover {
+            background: #eaf4fc;
+            border-color: #3498db;
+        }
+
+        .kmap-cell.selected-fill {
+            background: #d6eaf8;
+            color: #1a5276;
+            border-color: #3498db;
+        }
+
+        .kmap-cell.correct-fill {
+            background: #d5f5e3;
+            color: #1e8449;
+            border-color: #27ae60;
+        }
+
+        .kmap-cell.wrong-fill {
+            background: #fde8e8;
+            color: #c0392b;
+            border-color: #e74c3c;
+            animation: shake 0.3s;
+        }
+
+        .kmap-cell.locked {
+            cursor: default;
+        }
+
+        .kmap-cell .cell-idx {
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            font-size: 9px;
+            color: #aaa;
+            font-weight: 400;
+        }
+
+
+        .kmap-cell.group-selected {
+            background: #fef9e7;
+            border: 2px dashed #f39c12;
+            color: #2c3e50;
+        }
+
+        .kmap-cell.group-correct {
+            background: #d5f5e3;
+            border: 2px solid #27ae60;
+        }
+
+        .kmap-cell.group-wrong {
+            background: #fde8e8;
+            border: 2px solid #e74c3c;
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-4px);
+            }
+
+            75% {
+                transform: translateX(4px);
+            }
+        }
+
+        .grouping-info {
+            background: #f0f7ff;
+            border: 1px solid #c5dff8;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 14px 0;
+            font-size: 14px;
+            color: #1a5276;
+        }
+
+        .selected-cells-display {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            background: #f8f9fa;
+            border: 1.5px solid #dee2e6;
+            border-radius: 6px;
+            padding: 8px 14px;
+            margin: 8px 0;
+            min-height: 36px;
+            color: #2c3e50;
+        }
+
+        .group-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .group-tag {
+            background: #d5f5e3;
+            border: 1.5px solid #82e0aa;
+            color: #1e8449;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .group-tag .term-label {
+            background: #27ae60;
+            color: white;
+            border-radius: 10px;
+            padding: 1px 7px;
+            font-size: 11px;
+        }
+
+        #result-screen {
+            display: none;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            border: 2px solid #d5f5e3;
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.12);
+            padding: 40px 36px;
+            text-align: center;
+        }
+
+        .result-trophy {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+
+        .result-card h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1e8449;
+            margin-bottom: 8px;
+        }
+
+        .result-card p {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .result-expression {
+            display: inline-block;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #3498db;
+            font-family: 'Courier New', monospace;
+            font-size: 22px;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-retry {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.35);
+        }
+
+        .btn-home-link {
+            background: white;
+            color: #2c3e50;
+            border: 2px solid #bdc3c7;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-home-link:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .result-summary {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .result-summary h4 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+        }
+
+        .result-summary .kmap-table {
+            margin: 0;
+        }
+
+        .var-label-corner {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .divider-line {
+            border: none;
+            border-top: 1px dashed #d5e8f3;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- header -->
+
+    <!-- HEADER -->
     <header class="main-header">
         <div class="header-container">
-
             <div class="logo-section">
-
                 <div class="pcce-logo-container">
                     <img src="../assets/pccoe.png" alt="PCCOE Logo" class="pcce-logo-img">
-
                     <div class="pcce-logo-text">
                         <span class="main">APPLIED SCIENCES & HUMANITIES</span>
                         <span class="sub">Pimpri Chinchwad College of Engineering</span>
                     </div>
                 </div>
-
                 <div class="header-divider"></div>
-
                 <div class="virtual-labs-logo">
                     <i class="fas fa-flask"></i>
                     <h1>Virtual <span>Lab</span></h1>
                 </div>
-
             </div>
-
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span>Welcome, Student</span>
             </div>
-
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-
     <div class="page-wrapper">
-        <!-- Sidebar -->
+        <!-- Sidebar. -->
         <aside class="sidebar">
             <nav class="sidebar-nav">
-                <a href="../home.html" class="nav-item">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a href="aim.html" class="nav-item">
-                    <i class="fas fa-bullseye"></i>
-                    <span>Aim</span>
-                </a>
-                <a href="theory.html" class="nav-item">
-                    <i class="fas fa-book"></i>
-                    <span>Theory</span>
-                </a>
-                <a href="pre-test.html" class="nav-item">
-                    <i class="fas fa-question-circle"></i>
-                    <span>Pre-test</span>
-                </a>
-                <a href="assignment.html" class="nav-item active">
-                    <i class="fa fa-check"></i>
-                    <span>Assignment</span>
-                </a>
-                <a href="simulation.html" class="nav-item">
-                    <i class="fas fa-desktop"></i>
-                    <span>Simulation</span>
-                </a>
-                <a href="post-test.html" class="nav-item">
-                    <i class="fas fa-clipboard-check"></i>
-                    <span>Post-test</span>
-                </a>
-                <a href="reference.html" class="nav-item">
-                    <i class="fas fa-book-open"></i>
-                    <span>References</span>
-                </a>
-                <a href="contributors.html" class="nav-item">
-                    <i class="fas fa-users"></i>
-                    <span>Contributors</span>
-                </a>
-                <a href="feedback.html" class="nav-item">
-                    <i class="fas fa-comment-alt"></i>
-                    <span>Feedback</span>
-                </a>
+                <a href="../home.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+                <a href="aim.html" class="nav-item"><i class="fas fa-bullseye"></i><span>Aim</span></a>
+                <a href="theory.html" class="nav-item"><i class="fas fa-book"></i><span>Theory</span></a>
+                <a href="pre-test.html" class="nav-item"><i class="fas fa-question-circle"></i><span>Pre-test</span></a>
+                <a href="assignment.html" class="nav-item active"><i class="fa fa-check"></i><span>Assignment</span></a>
+                <a href="simulation.html" class="nav-item "><i
+                        class="fas fa-desktop"></i><span>Simulation</span></a>
+                <a href="post-test.html" class="nav-item"><i
+                        class="fas fa-clipboard-check"></i><span>Post-test</span></a>
+                <a href="reference.html" class="nav-item"><i class="fas fa-book-open"></i><span>References</span></a>
+                <a href="contributors.html" class="nav-item"><i class="fas fa-users"></i><span>Contributors</span></a>
+                <a href="feedback.html" class="nav-item"><i class="fas fa-comment-alt"></i><span>Feedback</span></a>
             </nav>
         </aside>
 
-        <!-- ASSIGNMENT CONTENT -->
+        <!-- MAIN -->
         <main class="container home-content">
 
             <div class="content-header">
                 <h2>Assignment</h2>
-                <p>Lorem ipsum dolor sit amet.</p>
+                <p>Interactive K-Map Solver — Step-by-Step Guided Practice</p>
             </div>
-        </main>
 
-    </div>  
-<!-- FOOTER -->
-<footer class="container">
-    <p>
-        Virtual Labs © 2025 | Applied Sciences & Humanities Department |
-        <strong>Pimpri Chinchwad College of Engineering</strong>
-    </p>
-</footer>
+            <!-- MODE SELECTION SCREEN -->
+            <div id="mode-screen">
+                <div class="sim-intro">
+                    <p>Select a problem type to begin the guided K-Map solving exercise.</p>
+                </div>
+                <div class="mode-grid">
+                    <div class="mode-card" onclick="startSimulator(0)">
+                        <div class="mode-icon"><i class="fas fa-th-large"></i></div>
+                        <h3>2-Variable K-Map</h3>
+                        <p>4-cell map, 2 variables (A, B)</p>
+                    </div>
+                    <div class="mode-card" onclick="startSimulator(1)">
+                        <div class="mode-icon"><i class="fas fa-border-all"></i></div>
+                        <h3>3-Variable K-Map</h3>
+                        <p>8-cell map, 3 variables (A, B, C)</p>
+                    </div>
+                    <div class="mode-card" onclick="startSimulator(2)">
+                        <div class="mode-icon"><i class="fas fa-table"></i></div>
+                        <h3>4-Variable K-Map</h3>
+                        <p>16-cell map, 4 variables (A, B, C, D)</p>
+                    </div>
+                    <div class="mode-card" onclick="startSimulator(3)">
+                        <div class="mode-icon"><i class="fas fa-question"></i></div>
+                        <h3>Don't Care Conditions</h3>
+                        <p>4-variable map with X conditions</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATOR SCREEN -->
+            <div id="simulator">
+                <div class="sim-header-bar">
+                    <div class="problem-badge" id="problem-display">F(A,B,C) = Σm(1,3,5,7)</div>
+                    <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Change Mode</button>
+                </div>
+
+
+                <div class="step-indicators" id="step-indicators"></div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+                </div>
+
+
+                <div id="steps-container"></div>
+            </div>
+
+            <div id="result-screen">
+                <div class="result-card">
+                    <div class="result-trophy">🏆</div>
+                    <h2>Excellent Work!</h2>
+                    <p>You successfully simplified the Boolean function using K-Map.</p>
+                    <div>
+                        <small style="color:#888;font-size:13px;">Simplified Expression</small><br>
+                        <div class="result-expression" id="result-expression">F = AB + A'B'</div>
+                    </div>
+                    <div class="result-summary">
+                        <h4>Correct K-Map &amp; Groupings</h4>
+                        <div id="result-kmap"></div>
+                        <div style="margin-top:14px;" id="result-groups"></div>
+                    </div>
+                    <div class="result-actions">
+                        <button class="btn-retry" onclick="retrySimulator()">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                        <a href="../home.html" class="btn-home-link">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            Virtual Labs © 2025 | Applied Sciences & Humanities Department |
+            <strong>Pimpri Chinchwad College of Engineering</strong>
+        </p>
+    </footer>
+
+    <script>
+
+        const PROBLEMS = [
+            {
+
+                title: "F(A,B) = Σm(0,2,3)",
+                vars: ["A", "B"],
+                numVars: 2,
+                gridSize: "2×2",
+                minterms: [0, 2, 3],
+                dontCares: [],
+                totalCells: 4,
+                // K-map layout: rows=A, cols=B; order follows Gray code
+                rowLabels: ["0", "1"],        // A
+                colLabels: ["0", "1"],        // B
+                rowVars: "A",
+                colVars: "B",
+                // cell index → minterm mapping (row-major, Gray code order)
+                // For 2-var: row=A, col=B → minterm = AB
+                cellMinterm: [0, 1, 2, 3],   // cell 0=m0, 1=m1, 2=m2, 3=m3
+                // Valid groups: each entry = { cells: [...], term: "..." }
+                validGroups: [
+                    { cells: [0, 2], term: "B'" },
+                    { cells: [2, 3], term: "A" }
+                ],
+                expression: "F = B' + A",
+                hints: {
+                    step1: "Count the variables listed in F(A,B). There are 2 variables.",
+                    step2: "A 2-variable K-Map has 2² = 4 cells → grid size 2×2.",
+                    step4: "Place a 1 in cells for minterms 0, 2, and 3. All other cells get 0.",
+                    step5: "Group {m0, m2}: A changes (0→1), B=0 always → term = B'. Group {m2, m3}: B changes, A=1 always → term = A.",
+                    step6: "OR all group terms together: F = B' + A"
+                }
+            },
+            {
+                // 1 — 3-Variable
+                title: "F(A,B,C) = Σm(1,3,5,7)",
+                vars: ["A", "B", "C"],
+                numVars: 3,
+                gridSize: "2×4",
+                minterms: [1, 3, 5, 7],
+                dontCares: [],
+                totalCells: 8,
+                rowLabels: ["0", "1"],           // A
+                colLabels: ["00", "01", "11", "10"],  // BC (Gray)
+                rowVars: "A",
+                colVars: "BC",
+                // Gray-code column order: BC=00,01,11,10 → minterms per cell:
+                // row A=0: cols BC=00→m0, BC=01→m1, BC=11→m3, BC=10→m2
+                // row A=1: cols BC=00→m4, BC=01→m5, BC=11→m7, BC=10→m6
+                cellMinterm: [0, 1, 3, 2, 4, 5, 7, 6],
+                validGroups: [
+                    { cells: [1, 2, 5, 6], term: "C" }   // all C=1 cells: m1,m3,m5,m7
+                ],
+                expression: "F = C",
+                hints: {
+                    step1: "Count the variables in F(A,B,C). There are 3 variables.",
+                    step2: "A 3-variable K-Map has 2³ = 8 cells → grid size 2×4.",
+                    step4: "Place 1s in cells for minterms 1, 3, 5, 7.",
+                    step5: "All four 1s form one large group of 8-wait, 4 cells. Check: A varies (0 and 1), B varies, C=1 always. → C is the only constant variable.",
+                    step6: "F = C"
+                }
+            },
+            {
+                // 2 — 4-Variable
+                title: "F(A,B,C,D) = Σm(0,1,2,3,8,9,10,11)",
+                vars: ["A", "B", "C", "D"],
+                numVars: 4,
+                gridSize: "4×4",
+                minterms: [0, 1, 2, 3, 8, 9, 10, 11],
+                dontCares: [],
+                totalCells: 16,
+                rowLabels: ["00", "01", "11", "10"],   // AB (Gray)
+                colLabels: ["00", "01", "11", "10"],   // CD (Gray)
+                rowVars: "AB",
+                colVars: "CD",
+                // 4×4 grid, row-major, columns in Gray order CD=00,01,11,10
+                // AB=00: m0 m1 m3 m2
+                // AB=01: m4 m5 m7 m6
+                // AB=11: m12 m13 m15 m14
+                // AB=10: m8 m9 m11 m10
+                cellMinterm: [0, 1, 3, 2, 4, 5, 7, 6, 12, 13, 15, 14, 8, 9, 11, 10],
+                validGroups: [
+                    { cells: [0, 1, 2, 3, 12, 13, 14, 15], term: "B'" }  // B=0 rows: AB=00 and AB=10
+                ],
+                expression: "F = B'",
+                hints: {
+                    step1: "Count the variables in F(A,B,C,D). There are 4 variables.",
+                    step2: "A 4-variable K-Map has 2⁴ = 16 cells → grid size 4×4.",
+                    step4: "Place 1s in cells for minterms 0,1,2,3,8,9,10,11.",
+                    step5: "Rows AB=00 and AB=10 are both fully filled (wrap-around group of 8). In both rows B=0. A varies, C varies, D varies. Only B is constant at 0.",
+                    step6: "F = B'"
+                }
+            },
+            {
+                // 3 — Don't Care
+                title: "F(A,B,C,D) = Σm(1,3,7,11,15) + d(0,2)",
+                vars: ["A", "B", "C", "D"],
+                numVars: 4,
+                gridSize: "4×4",
+                minterms: [1, 3, 7, 11, 15],
+                dontCares: [0, 2],
+                totalCells: 16,
+                rowLabels: ["00", "01", "11", "10"],
+                colLabels: ["00", "01", "11", "10"],
+                rowVars: "AB",
+                colVars: "CD",
+                cellMinterm: [0, 1, 3, 2, 4, 5, 7, 6, 12, 13, 15, 14, 8, 9, 11, 10],
+                validGroups: [
+                    { cells: [1, 2, 5, 6], term: "CD" },        // m1,m3,m5,m7 → C=1,D=1 (using d to expand)
+                    { cells: [6, 10], term: "ACD" }             // m7,m11,m15 vertical column
+                ],
+                // Simplified answer for don't care problem
+                expression: "F = CD + A'D",
+                hints: {
+                    step1: "Count the variables in F(A,B,C,D). There are 4 variables.",
+                    step2: "A 4-variable K-Map has 2⁴ = 16 cells → grid size 4×4.",
+                    step4: "Place 1s for minterms 1,3,7,11,15 and X for don't cares 0,2.",
+                    step5: "Don't care cells (X) may be used to enlarge groups. Group the D=1 column using X cells to form CD. Group remaining 1s.",
+                    step6: "F = CD + A'D"
+                }
+            }
+        ];
+
+
+        let currentProblem = null;
+        let currentStep = 0;
+        let totalSteps = 6;
+        let stepPassed = [];   // true/false per step
+        let filledCells = {};   // cellIndex → 0|1|'X' (step 4)
+        let selectedGroup = [];   // cell indexes (step 5)
+        let confirmedGroups = [];  // array of { cells, term }
+
+        function startSimulator(problemIdx) {
+            currentProblem = PROBLEMS[problemIdx];
+            currentStep = 0;
+            stepPassed = new Array(totalSteps).fill(false);
+            filledCells = {};
+            selectedGroup = [];
+            confirmedGroups = [];
+
+            document.getElementById('mode-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'none';
+            document.getElementById('simulator').style.display = 'block';
+
+            document.getElementById('problem-display').textContent = currentProblem.title;
+
+            buildStepIndicators();
+            buildAllSteps();
+            showStep(0);
+        }
+
+        function goBack() {
+            document.getElementById('simulator').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'none';
+            document.getElementById('mode-screen').style.display = 'block';
+        }
+
+        function retrySimulator() {
+            document.getElementById('result-screen').style.display = 'none';
+            document.getElementById('mode-screen').style.display = 'block';
+        }
+
+        function buildStepIndicators() {
+            const cont = document.getElementById('step-indicators');
+            cont.innerHTML = '';
+            const labels = ['Vars', 'Grid', 'K-Map', 'Fill', 'Group', 'Expr'];
+            for (let i = 0; i < totalSteps; i++) {
+                const d = document.createElement('div');
+                d.className = 'step-dot';
+                d.id = `dot-${i}`;
+                d.title = labels[i];
+                d.textContent = i + 1;
+                cont.appendChild(d);
+            }
+        }
+
+        function updateProgress() {
+            const pct = ((currentStep) / totalSteps) * 100;
+            document.getElementById('progress-fill').style.width = pct + '%';
+            for (let i = 0; i < totalSteps; i++) {
+                const d = document.getElementById(`dot-${i}`);
+                d.className = 'step-dot';
+                if (i < currentStep) d.classList.add('done');
+                else if (i === currentStep) d.classList.add('active');
+            }
+        }
+
+
+        function buildAllSteps() {
+            const cont = document.getElementById('steps-container');
+            cont.innerHTML = '';
+            cont.appendChild(makeStep1());
+            cont.appendChild(makeStep2());
+            cont.appendChild(makeStep3());
+            cont.appendChild(makeStep4());
+            cont.appendChild(makeStep5());
+            cont.appendChild(makeStep6());
+        }
+
+        function showStep(idx) {
+            currentStep = idx;
+            updateProgress();
+            document.querySelectorAll('.step-card').forEach((c, i) => {
+                c.classList.toggle('active', i === idx);
+            });
+            window.scrollTo({ top: document.getElementById('simulator').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        function makeCard(stepIdx, title, bodyHTML) {
+            const div = document.createElement('div');
+            div.className = 'step-card';
+            div.id = `step-card-${stepIdx}`;
+            div.innerHTML = `
+        <div class="step-label">
+            <span class="step-num">${stepIdx + 1}</span>
+            Step ${stepIdx + 1} — ${title}
+        </div>
+        ${bodyHTML}
+        <div class="feedback-box" id="fb-${stepIdx}"></div>
+    `;
+            return div;
+        }
+
+
+        function makeStep1() {
+            const html = `
+        <p class="step-question">How many variables does this Boolean function have?</p>
+        <p style="color:#555;font-size:14px;margin-bottom:14px;">
+            Look at the function notation: <strong>${currentProblem.title.split('=')[0].trim()}</strong>
+        </p>
+        <input type="number" class="sim-input" id="inp-step1" placeholder="Enter number" min="1" max="4"
+               onkeydown="if(event.key==='Enter') submitStep(0)">
+        <div class="step-controls">
+            <button class="btn-submit" onclick="submitStep(0)"><i class="fas fa-check"></i> Submit</button>
+            <button class="btn-hint" onclick="showHint(0)"><i class="fas fa-lightbulb"></i> Hint</button>
+            <button class="btn-solution" onclick="showSolution(0)"><i class="fas fa-eye"></i> Solution</button>
+            <button class="btn-next" id="next-0" onclick="showStep(1)"><i class="fas fa-arrow-right"></i> Next Step</button>
+        </div>`;
+            return makeCard(0, "Identify Variables", html);
+        }
+
+        function submitStep(idx) {
+            if (idx === 0) {
+                const val = parseInt(document.getElementById('inp-step1').value);
+                if (val === currentProblem.numVars) markCorrect(0, `✅ Correct! This function has <strong>${currentProblem.numVars} variables</strong>: ${currentProblem.vars.join(', ')}.`);
+                else markWrong(0, `❌ Not quite. Count the variables inside the parentheses of the function.`);
+            }
+            else if (idx === 1) {
+                const val = document.getElementById('inp-step2').value.trim().replace(/\s/g, '').toUpperCase();
+                const correct = currentProblem.gridSize.replace('×', 'X').toUpperCase();
+                const correct2 = currentProblem.gridSize.replace('×', 'x').toUpperCase();
+                if (val === correct || val === correct2 || val === currentProblem.gridSize.toUpperCase()) {
+                    markCorrect(1, `✅ Correct! A ${currentProblem.numVars}-variable K-Map has 2<sup>${currentProblem.numVars}</sup> = ${currentProblem.totalCells} cells, arranged as a <strong>${currentProblem.gridSize}</strong> grid.`);
+                } else {
+                    markWrong(1, `❌ Incorrect. A ${currentProblem.numVars}-variable K-Map needs ${currentProblem.totalCells} cells. What grid fits ${currentProblem.totalCells} cells?`);
+                }
+            }
+            else if (idx === 5) validateExpression();
+        }
+
+
+        function makeStep2() {
+            const html = `
+        <p class="step-question">What is the grid size of a ${currentProblem.numVars}-variable K-Map?</p>
+        <p style="color:#555;font-size:14px;margin-bottom:14px;">
+            A K-Map has 2<sup>${currentProblem.numVars}</sup> = <strong>${currentProblem.totalCells} cells</strong>.
+            Enter the grid dimensions (e.g., 2×4 or 4×4).
+        </p>
+        <input type="text" class="sim-input" id="inp-step2" placeholder="e.g. 2x4" style="width:140px"
+               onkeydown="if(event.key==='Enter') submitStep(1)">
+        <div class="step-controls">
+            <button class="btn-submit" onclick="submitStep(1)"><i class="fas fa-check"></i> Submit</button>
+            <button class="btn-hint" onclick="showHint(1)"><i class="fas fa-lightbulb"></i> Hint</button>
+            <button class="btn-solution" onclick="showSolution(1)"><i class="fas fa-eye"></i> Solution</button>
+            <button class="btn-next" id="next-1" onclick="showStep(2)"><i class="fas fa-arrow-right"></i> Next Step</button>
+        </div>`;
+            return makeCard(1, "Determine Grid Size", html);
+        }
+
+
+        function makeStep3() {
+            const kmapHTML = buildKmapHTML(false);
+            const html = `
+        <p class="step-question">K-Map generated using Gray Code ordering.</p>
+        <p style="color:#555;font-size:14px;margin-bottom:14px;">
+            Rows are labelled by <strong>${currentProblem.rowVars}</strong>,
+            columns by <strong>${currentProblem.colVars}</strong> — both in Gray Code order.
+            Each cell shows its minterm number. Study this layout before filling in the next step.
+        </p>
+        <div class="kmap-wrap">${kmapHTML}</div>
+        <div class="step-controls">
+            <button class="btn-next" id="next-2" onclick="showStep(3)" style="display:flex">
+                <i class="fas fa-arrow-right"></i> Proceed to Fill K-Map
+            </button>
+        </div>`;
+            return makeCard(2, "Generate K-Map", html);
+        }
+
+        function makeStep4() {
+            const kmapHTML = buildKmapHTML(true);   // clickable
+            const html = `
+        <p class="step-question">Fill in the K-Map by clicking the cells.</p>
+        <p style="color:#555;font-size:14px;margin-bottom:14px;">
+            Click each cell to toggle between <strong>0</strong> and <strong>1</strong>
+            (or <strong>X</strong> for don't cares if applicable).
+            Place <strong>1</strong> for each minterm in the function.
+        </p>
+        <div class="kmap-wrap" id="kmap-fill-wrap">${kmapHTML}</div>
+        <div class="step-controls">
+            <button class="btn-submit" onclick="validateFill()"><i class="fas fa-check"></i> Validate Fill</button>
+            <button class="btn-hint" onclick="showHint(3)"><i class="fas fa-lightbulb"></i> Hint</button>
+            <button class="btn-solution" onclick="solveFill()"><i class="fas fa-eye"></i> Show Solution</button>
+            <button class="btn-next" id="next-3" onclick="showStep(4)"><i class="fas fa-arrow-right"></i> Next Step</button>
+        </div>`;
+            return makeCard(3, "Fill K-Map Values", html);
+        }
+
+
+        function makeStep5() {
+            const p = currentProblem;
+            const groupDescs = p.validGroups.map((g, i) =>
+                `Group ${i + 1}: Select cells with minterms {${g.cells.map(ci => p.cellMinterm[ci]).join(', ')}}`
+            ).join('<br>');
+
+            const html = `
+        <p class="step-question">Click cells to form valid groups (rectangles of 1, 2, 4, or 8 cells).</p>
+        <div class="grouping-info">
+            <strong><i class="fas fa-info-circle"></i> Instructions:</strong>
+            Click cells containing <strong>1</strong> to select them into a group, then click
+            <em>"Confirm Group"</em>. Form all required groups to cover every 1 in the map.
+            <br><small style="color:#777;margin-top:4px;display:block;">This problem has <strong>${p.validGroups.length}</strong> group(s) to find.</small>
+        </div>
+        <p style="font-size:13px;color:#888;margin-bottom:8px;">Currently selected cells:</p>
+        <div class="selected-cells-display" id="selected-display">None</div>
+        <div class="kmap-wrap" id="kmap-group-wrap">${buildKmapHTML(false, true)}</div>
+        <div style="margin-top:12px;">
+            <p style="font-size:13px;color:#555;margin-bottom:8px;">Confirmed groups:</p>
+            <div class="group-list" id="group-list-display"></div>
+        </div>
+        <div class="step-controls">
+            <button class="btn-submit" onclick="confirmGroup()"><i class="fas fa-object-group"></i> Confirm Group</button>
+            <button class="btn-hint" onclick="showHint(4)" style="border-color:#f39c12"><i class="fas fa-lightbulb"></i> Hint</button>
+            <button class="btn-solution" onclick="solveGrouping()"><i class="fas fa-eye"></i> Show Solution</button>
+            <button class="btn-hint" onclick="clearGroupSelection()" style="border-color:#e74c3c;color:#e74c3c">
+                <i class="fas fa-times"></i> Clear Selection
+            </button>
+            <button class="btn-next" id="next-4" onclick="showStep(5)"><i class="fas fa-arrow-right"></i> Next Step</button>
+        </div>`;
+            return makeCard(4, "Group the 1s", html);
+        }
+        function makeStep6() {
+            const html = `
+        <p class="step-question">Write the final minimized Boolean expression.</p>
+        <p style="color:#555;font-size:14px;margin-bottom:14px;">
+            OR all the terms from your confirmed groups together.
+            Use <code>'</code> for complement (e.g., A' means NOT A).
+            Use + for OR between terms (e.g., AB + A'C).
+        </p>
+        <div style="margin-bottom:14px;">
+            <strong style="font-size:15px;color:#2c3e50;">F = </strong>
+            <input type="text" class="sim-input" id="inp-step6" placeholder="e.g. AB + A'C" style="width:260px"
+                   onkeydown="if(event.key==='Enter') validateExpression()">
+        </div>
+        <div class="step-controls">
+            <button class="btn-submit" onclick="validateExpression()"><i class="fas fa-check"></i> Check Answer</button>
+            <button class="btn-hint" onclick="showHint(5)"><i class="fas fa-lightbulb"></i> Hint</button>
+            <button class="btn-solution" onclick="showSolution(5)"><i class="fas fa-eye"></i> Show Solution</button>
+            <button class="btn-next" id="next-5" onclick="showResults()" style="background:linear-gradient(135deg,#27ae60,#1e8449)">
+                <i class="fas fa-trophy"></i> Finish &amp; See Results
+            </button>
+        </div>`;
+            return makeCard(5, "Write Final Expression", html);
+        }
+
+        function buildKmapHTML(fillMode, groupMode) {
+            const p = currentProblem;
+            const rows = p.rowLabels;
+            const cols = p.colLabels;
+            const cellMap = p.cellMinterm;
+
+            let html = `<table class="kmap-table">`;
+
+            // Header row
+            html += `<tr><th class="corner"><span class="var-label-corner">${p.rowVars} \\ ${p.colVars}</span></th>`;
+            for (const c of cols) html += `<th>${c}</th>`;
+            html += `</tr>`;
+
+            let cellIdx = 0;
+            for (let r = 0; r < rows.length; r++) {
+                html += `<tr><th class="row-header">${rows[r]}</th>`;
+                for (let c = 0; c < cols.length; c++) {
+                    const mt = cellMap[cellIdx];
+                    const isMint = p.minterms.includes(mt);
+                    const isDC = p.dontCares.includes(mt);
+
+                    if (fillMode) {
+                        // Clickable fill cell — starts blank / 0
+                        html += `<td class="kmap-cell" id="fc-${cellIdx}" data-idx="${cellIdx}" data-mt="${mt}"
+                             onclick="handleFillClick(${cellIdx})">
+                             <span class="cell-idx">m${mt}</span>
+                             <span id="fv-${cellIdx}">0</span>
+                         </td>`;
+                    } else if (groupMode) {
+                        // Show values from fill step; clickable for grouping
+                        const val = isMint ? '1' : (isDC ? 'X' : '0');
+                        const cls = isMint ? 'correct-fill' : (isDC ? '' : '');
+                        html += `<td class="kmap-cell ${cls}" id="gc-${cellIdx}" data-idx="${cellIdx}" data-mt="${mt}" data-val="${val}"
+                             onclick="handleGroupClick(${cellIdx})">
+                             <span class="cell-idx">m${mt}</span>
+                             ${val}
+                         </td>`;
+                    } else {
+                        // Read-only display
+                        const val = isMint ? '1' : (isDC ? 'X' : 'm' + mt);
+                        const cls = isMint ? 'correct-fill' : (isDC ? '' : '');
+                        html += `<td class="kmap-cell locked ${cls}">${val === `m${mt}` ? `<small style="font-size:11px;color:#aaa">m${mt}</small>` : val}</td>`;
+                    }
+                    cellIdx++;
+                }
+                html += `</tr>`;
+            }
+
+            html += `</table>`;
+            return html;
+        }
+
+        function handleFillClick(idx) {
+            const p = currentProblem;
+            const mt = p.cellMinterm[idx];
+            const cell = document.getElementById(`fc-${idx}`);
+            const valEl = document.getElementById(`fv-${idx}`);
+            const current = valEl.textContent;
+
+            let next;
+            if (p.dontCares.includes(mt)) {
+                next = current === '0' ? 'X' : '0';
+            } else {
+                next = current === '0' ? '1' : '0';
+            }
+
+            valEl.textContent = next;
+            filledCells[idx] = next;
+
+            cell.classList.remove('selected-fill', 'correct-fill', 'wrong-fill');
+            if (next === '1') cell.classList.add('selected-fill');
+            else if (next === 'X') cell.classList.add('selected-fill');
+        }
+
+        function validateFill() {
+            const p = currentProblem;
+            let allCorrect = true;
+
+            for (let i = 0; i < p.totalCells; i++) {
+                const mt = p.cellMinterm[i];
+                const cell = document.getElementById(`fc-${i}`);
+                const valEl = document.getElementById(`fv-${i}`);
+                if (!cell) continue;
+
+                const userVal = (valEl ? valEl.textContent : '0').trim();
+                const expectedVal = p.minterms.includes(mt) ? '1' : (p.dontCares.includes(mt) ? 'X' : '0');
+
+                cell.classList.remove('selected-fill', 'correct-fill', 'wrong-fill');
+                if (userVal === expectedVal) {
+                    cell.classList.add('correct-fill');
+                } else {
+                    cell.classList.add('wrong-fill');
+                    allCorrect = false;
+                }
+            }
+
+            if (allCorrect) {
+                markCorrect(3, `✅ Perfect! All ${p.minterms.length} minterm(s) are correctly placed. The K-Map is filled correctly.`);
+            } else {
+                markWrong(3, `❌ Some cells are incorrect. Red cells need fixing. Make sure you placed 1 only for the minterms in the function.`);
+            }
+        }
+
+        function solveFill() {
+            const p = currentProblem;
+            for (let i = 0; i < p.totalCells; i++) {
+                const mt = p.cellMinterm[i];
+                const cell = document.getElementById(`fc-${i}`);
+                const valEl = document.getElementById(`fv-${i}`);
+                if (!cell) continue;
+                const v = p.minterms.includes(mt) ? '1' : (p.dontCares.includes(mt) ? 'X' : '0');
+                valEl.textContent = v;
+                filledCells[i] = v;
+                cell.classList.remove('selected-fill', 'wrong-fill');
+                if (v === '1' || v === 'X') cell.classList.add('correct-fill');
+            }
+            markCorrect(3, `✅ Solution shown. The 1s are placed at minterms: ${p.minterms.join(', ')}.`);
+        }
+
+
+        function handleGroupClick(idx) {
+            const p = currentProblem;
+            const mt = p.cellMinterm[idx];
+            const cell = document.getElementById(`gc-${idx}`);
+            if (!cell) return;
+
+            // Only allow selecting 1s (and X for don't cares)
+            const val = cell.getAttribute('data-val');
+            if (val === '0') {
+                showFeedback(4, 'wrong', '❌ You can only select cells that contain 1 (or X don\'t care). Cell contains 0.');
+                return;
+            }
+
+            const pos = selectedGroup.indexOf(idx);
+            if (pos === -1) {
+                selectedGroup.push(idx);
+                cell.classList.add('group-selected');
+            } else {
+                selectedGroup.splice(pos, 1);
+                cell.classList.remove('group-selected');
+            }
+
+            // Update display
+            const disp = document.getElementById('selected-display');
+            if (selectedGroup.length === 0) {
+                disp.textContent = 'None';
+            } else {
+                const mts = selectedGroup.map(ci => `m${p.cellMinterm[ci]}`).join(', ');
+                disp.textContent = `Selected: {${mts}} — ${selectedGroup.length} cell(s)`;
+            }
+        }
+
+        function confirmGroup() {
+            const p = currentProblem;
+            if (selectedGroup.length === 0) {
+                showFeedback(4, 'wrong', '❌ No cells selected. Click cells containing 1 to form a group.');
+                return;
+            }
+
+            // Rule 1: power of 2
+            const size = selectedGroup.length;
+            if (![1, 2, 4, 8, 16].includes(size)) {
+                showFeedback(4, 'wrong', `❌ Invalid group size: ${size}. Groups must contain 1, 2, 4, 8, or 16 cells.`);
+                flashGroupWrong();
+                return;
+            }
+
+            // Rule 2: all must be 1 or X
+            for (const ci of selectedGroup) {
+                const cell = document.getElementById(`gc-${ci}`);
+                const val = cell ? cell.getAttribute('data-val') : '0';
+                if (val === '0') {
+                    showFeedback(4, 'wrong', `❌ Group includes a cell with value 0. Only group cells containing 1.`);
+                    flashGroupWrong();
+                    return;
+                }
+            }
+
+            // Rule 3: match a valid group (sort and compare)
+            const sorted = [...selectedGroup].sort((a, b) => a - b);
+            let matched = null;
+            for (const vg of p.validGroups) {
+                const vgSorted = [...vg.cells].sort((a, b) => a - b);
+                if (JSON.stringify(sorted) === JSON.stringify(vgSorted)) {
+                    matched = vg;
+                    break;
+                }
+            }
+
+            if (!matched) {
+                showFeedback(4, 'wrong', `❌ This is not a valid grouping. Check that all selected cells form a proper rectangular group and are logically adjacent (Gray code adjacency).`);
+                flashGroupWrong();
+                return;
+            }
+
+            // Already confirmed this group?
+            const alreadyDone = confirmedGroups.some(g => JSON.stringify([...g.cells].sort((a, b) => a - b)) === JSON.stringify(sorted));
+            if (alreadyDone) {
+                showFeedback(4, 'hint', `ℹ️ You've already confirmed this group. Try finding the remaining group(s).`);
+                clearGroupSelection();
+                return;
+            }
+
+            // ✅ Valid!
+            confirmedGroups.push(matched);
+            for (const ci of selectedGroup) {
+                const cell = document.getElementById(`gc-${ci}`);
+                if (cell) { cell.classList.remove('group-selected'); cell.classList.add('group-correct'); }
+            }
+
+            // Add tag
+            const tagList = document.getElementById('group-list-display');
+            const tag = document.createElement('div');
+            tag.className = 'group-tag';
+            tag.innerHTML = `<span class="term-label">Term</span> ${matched.term} &nbsp;<small style="color:#7f8c8d">{${matched.cells.map(ci => p.cellMinterm[ci]).join(',')}}</small>`;
+            tagList.appendChild(tag);
+
+            selectedGroup = [];
+            document.getElementById('selected-display').textContent = 'None';
+
+            if (confirmedGroups.length === p.validGroups.length) {
+                markCorrect(4, `✅ All ${p.validGroups.length} group(s) found! Terms: ${p.validGroups.map(g => g.term).join(', ')}.`);
+            } else {
+                showFeedback(4, 'correct', `✅ Group confirmed! Term: <strong>${matched.term}</strong>. Find ${p.validGroups.length - confirmedGroups.length} more group(s).`);
+            }
+        }
+
+        function clearGroupSelection() {
+            for (const ci of selectedGroup) {
+                const cell = document.getElementById(`gc-${ci}`);
+                if (cell) cell.classList.remove('group-selected');
+            }
+            selectedGroup = [];
+            const disp = document.getElementById('selected-display');
+            if (disp) disp.textContent = 'None';
+        }
+
+        function flashGroupWrong() {
+            for (const ci of selectedGroup) {
+                const cell = document.getElementById(`gc-${ci}`);
+                if (cell) {
+                    cell.classList.add('group-wrong');
+                    setTimeout(() => cell.classList.remove('group-wrong'), 600);
+                }
+            }
+        }
+
+        function solveGrouping() {
+            const p = currentProblem;
+            confirmedGroups = [...p.validGroups];
+
+            // Mark all correct cells
+            for (const vg of p.validGroups) {
+                for (const ci of vg.cells) {
+                    const cell = document.getElementById(`gc-${ci}`);
+                    if (cell) { cell.classList.remove('group-selected', 'group-wrong'); cell.classList.add('group-correct'); }
+                }
+            }
+
+            // Show all tags
+            const tagList = document.getElementById('group-list-display');
+            tagList.innerHTML = '';
+            for (const vg of p.validGroups) {
+                const tag = document.createElement('div');
+                tag.className = 'group-tag';
+                tag.innerHTML = `<span class="term-label">Term</span> ${vg.term} &nbsp;<small style="color:#7f8c8d">{${vg.cells.map(ci => p.cellMinterm[ci]).join(',')}}</small>`;
+                tagList.appendChild(tag);
+            }
+
+            selectedGroup = [];
+            document.getElementById('selected-display').textContent = 'None';
+            markCorrect(4, `✅ Solution shown. Groups: ${p.validGroups.map(g => g.term).join(', ')}.`);
+        }
+
+        function validateExpression() {
+            const p = currentProblem;
+            const userVal = (document.getElementById('inp-step6').value || '').trim();
+            if (!userVal) { showFeedback(5, 'wrong', '❌ Please enter an expression.'); return; }
+
+            // Normalize both: remove spaces, lowercase
+            const normalize = s => s.replace(/\s/g, '').toLowerCase().replace(/f\s*=\s*/, '');
+            const userNorm = normalize(userVal);
+            const corrNorm = normalize(p.expression);
+
+            // Also build set of terms for order-independent comparison
+            const termSet = s => new Set(s.split('+').map(t => t.trim().toLowerCase()).sort());
+            const userTerms = termSet(userNorm);
+            const corrTerms = termSet(corrNorm);
+            const setsMatch = [...userTerms].every(t => corrTerms.has(t)) && [...corrTerms].every(t => userTerms.has(t));
+
+            if (userNorm === corrNorm || setsMatch) {
+                document.getElementById('inp-step6').classList.add('correct');
+                markCorrect(5, `✅ Excellent! The correct simplified expression is <strong>${p.expression}</strong>.`);
+            } else {
+                document.getElementById('inp-step6').classList.add('wrong');
+                markWrong(5, `❌ Not quite. Review your groups and the terms they produce. OR all terms together.`);
+                setTimeout(() => document.getElementById('inp-step6').classList.remove('wrong'), 1200);
+            }
+        }
+
+
+        function showFeedback(stepIdx, type, msg) {
+            const fb = document.getElementById(`fb-${stepIdx}`);
+            if (!fb) return;
+            fb.className = `feedback-box ${type}`;
+            fb.innerHTML = msg;
+            fb.style.display = 'block';
+        }
+
+        function markCorrect(stepIdx, msg) {
+            stepPassed[stepIdx] = true;
+            showFeedback(stepIdx, 'correct', msg);
+            const nextBtn = document.getElementById(`next-${stepIdx}`);
+            if (nextBtn) nextBtn.style.display = 'flex';
+        }
+
+        function markWrong(stepIdx, msg) {
+            showFeedback(stepIdx, 'wrong', msg);
+        }
+
+        function showHint(stepIdx) {
+            const p = currentProblem;
+            const hintMap = { 0: 'step1', 1: 'step2', 3: 'step4', 4: 'step5', 5: 'step6' };
+            const key = hintMap[stepIdx];
+            const hint = key ? p.hints[key] : 'No hint available for this step.';
+            showFeedback(stepIdx, 'hint', `💡 <strong>Hint:</strong> ${hint}`);
+        }
+
+        function showSolution(stepIdx) {
+            const p = currentProblem;
+            if (stepIdx === 0) {
+                document.getElementById('inp-step1').value = p.numVars;
+                submitStep(0);
+            } else if (stepIdx === 1) {
+                document.getElementById('inp-step2').value = p.gridSize;
+                submitStep(1);
+            } else if (stepIdx === 5) {
+                document.getElementById('inp-step6').value = p.expression.replace('F = ', '');
+                validateExpression();
+            }
+        }
+
+
+        function showResults() {
+            document.getElementById('simulator').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+
+            const p = currentProblem;
+            document.getElementById('result-expression').textContent = p.expression;
+
+            // Build correct K-map for result
+            const kmapEl = document.getElementById('result-kmap');
+            kmapEl.innerHTML = buildKmapHTML(false, false);
+
+            // Group summary
+            const groupsEl = document.getElementById('result-groups');
+            groupsEl.innerHTML = `<p style="font-size:13px;color:#555;margin-bottom:8px;"><strong>Simplified Terms:</strong></p>
+        <div class="group-list">
+            ${p.validGroups.map(g =>
+                `<div class="group-tag"><span class="term-label">Term</span> ${g.term}</div>`
+            ).join('')}
+        </div>`;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 
