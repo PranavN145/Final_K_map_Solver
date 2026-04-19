@@ -7,6 +7,129 @@
     <title>Theory | K-Map Solver</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* ── Only additions that do NOT touch existing classes ── */
+
+        .step-box {
+            background: #f0f7ff;
+            border: 1px solid #c5dff8;
+            border-left: 4px solid #3498db;
+            border-radius: 6px;
+            padding: 18px 22px;
+            margin: 18px 0;
+        }
+
+        .step-box .step-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a5276;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-badge {
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .warning-box {
+            background: #fff8e1;
+            border-left: 4px solid #f39c12;
+            border-radius: 6px;
+            padding: 14px 20px;
+            margin: 14px 0;
+        }
+
+        .warning-box p {
+            margin: 0 !important;
+            color: #7d6608 !important;
+        }
+
+        .tip-box {
+            background: #eafaf1;
+            border-left: 4px solid #27ae60;
+            border-radius: 6px;
+            padding: 14px 20px;
+            margin: 14px 0;
+        }
+
+        .tip-box p {
+            margin: 0 !important;
+            color: #1e8449 !important;
+        }
+
+        .kmap-grid {
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .kmap-grid th,
+        .kmap-grid td {
+            border: 2px solid #bdc3c7;
+            padding: 10px 18px;
+            text-align: center;
+            min-width: 52px;
+        }
+
+        .kmap-grid thead tr {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .kmap-grid .row-header {
+            background: #2c3e50;
+            color: white;
+            font-weight: 700;
+        }
+
+        .kmap-grid td {
+            background: #fdfefe;
+            color: #2c3e50;
+            font-size: 15px;
+        }
+
+        .kmap-grid td.one {
+            background: #d5f5e3;
+            font-weight: 700;
+            color: #1e8449;
+        }
+
+        .kmap-grid td.zero {
+            background: #fdfefe;
+            color: #7f8c8d;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 2px dashed #d5e8f3;
+            margin: 10px 0 30px 0;
+        }
+
+        .badge-label {
+            display: inline-block;
+            background: #eaf4fc;
+            color: #1a5276;
+            border: 1px solid #aed6f1;
+            border-radius: 4px;
+            padding: 2px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,84 +137,66 @@
     <!-- HEADER -->
     <header class="main-header">
         <div class="header-container">
-
             <div class="logo-section">
-
                 <div class="pcce-logo-container">
                     <img src="../assets/pccoe.png" alt="PCCOE Logo" class="pcce-logo-img">
-
                     <div class="pcce-logo-text">
                         <span class="main">APPLIED SCIENCES & HUMANITIES</span>
                         <span class="sub">Pimpri Chinchwad College of Engineering</span>
                     </div>
                 </div>
-
                 <div class="header-divider"></div>
-
                 <div class="virtual-labs-logo">
                     <i class="fas fa-flask"></i>
                     <h1>Virtual <span>Lab</span></h1>
                 </div>
-
             </div>
-
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
                 <span>Welcome, Student</span>
             </div>
-
         </div>
     </header>
 
     <div class="page-wrapper">
 
-        <!-- Sidebar  -->
+        <!-- Sidebar -->
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <a href="../home.html" class="nav-item">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
+                    <i class="fas fa-home"></i><span>Home</span>
                 </a>
                 <a href="aim.html" class="nav-item">
-                    <i class="fas fa-bullseye"></i>
-                    <span>Aim</span>
+                    <i class="fas fa-bullseye"></i><span>Aim</span>
                 </a>
                 <a href="theory.html" class="nav-item active">
-                    <i class="fas fa-book"></i>
-                    <span>Theory</span>
+                    <i class="fas fa-book"></i><span>Theory</span>
                 </a>
                 <a href="pre-test.html" class="nav-item">
-                    <i class="fas fa-question-circle"></i>
-                    <span>Pre-test</span>
+                    <i class="fas fa-question-circle"></i><span>Pre-test</span>
                 </a>
                 <a href="assignment.html" class="nav-item">
-                    <i class="fa fa-check"></i>
-                    <span>Assignment</span>
+                    <i class="fa fa-check"></i><span>Assignment</span>
                 </a>
                 <a href="simulation.html" class="nav-item">
-                    <i class="fas fa-desktop"></i>
-                    <span>Simulation</span>
+                    <i class="fas fa-desktop"></i><span>Simulation</span>
                 </a>
                 <a href="post-test.html" class="nav-item">
-                    <i class="fas fa-clipboard-check"></i>
-                    <span>Post-test</span>
+                    <i class="fas fa-clipboard-check"></i><span>Post-test</span>
                 </a>
                 <a href="reference.html" class="nav-item">
-                    <i class="fas fa-book-open"></i>
-                    <span>References</span>
+                    <i class="fas fa-book-open"></i><span>References</span>
                 </a>
                 <a href="contributors.html" class="nav-item">
-                    <i class="fas fa-users"></i>
-                    <span>Contributors</span>
+                    <i class="fas fa-users"></i><span>Contributors</span>
                 </a>
                 <a href="feedback.html" class="nav-item">
-                    <i class="fas fa-comment-alt"></i>
-                    <span>Feedback</span>
+                    <i class="fas fa-comment-alt"></i><span>Feedback</span>
                 </a>
             </nav>
         </aside>
 
-        <!-- theory Content -->
+        <!-- Theory Content -->
         <main class="container home-content">
 
             <div class="content-header">
@@ -101,190 +206,578 @@
 
             <div class="theory-content">
 
+                <!-- ═══════════════════════════════════════════
+                     SECTION 1 – INTRODUCTION
+                ════════════════════════════════════════════ -->
                 <section class="theory-section">
+                    <h3>1. Introduction</h3>
+                    <hr class="section-divider">
+
                     <p>
-                        Digital systems operate using Boolean logic, where variables assume binary values
-                        <strong>0</strong> or <strong>1</strong>. Complex logical functions used in digital
-                        circuits can be expressed and simplified using Boolean algebra. However, algebraic
-                        simplification becomes tedious and error-prone as the number of variables increases.
+                        Digital systems are built on <strong>Boolean logic</strong>, where every variable holds
+                        exactly one of two values: <strong>0 (FALSE)</strong> or <strong>1 (TRUE)</strong>.
+                        Logical operations — AND, OR, NOT — combine these values to describe the behaviour of
+                        any digital circuit.
                     </p>
 
                     <p>
-                        To overcome this limitation, <strong>Karnaugh Maps (K-Maps)</strong> provide a
-                        systematic and graphical technique for minimizing Boolean expressions.
+                        As the number of variables grows, Boolean expressions become large and difficult to work
+                        with. A complex, un-simplified expression wastes hardware: more gates, more wiring, higher
+                        power consumption, and slower operation.
+                    </p>
+
+                    <p><strong>Why algebraic simplification has limits:</strong></p>
+                    <ul>
+                        <li>Boolean algebra rules (De Morgan's, Distribution, Absorption…) must be applied
+                            manually and in the right order — easy to make mistakes.</li>
+                        <li>There is no guaranteed path to the minimum form; different people may reach
+                            different results.</li>
+                        <li>With 4 or more variables, tracking dozens of terms is impractical.</li>
+                    </ul>
+
+                    <p>
+                        <strong>Karnaugh Maps (K-Maps)</strong> solve this by providing a <em>visual,
+                        systematic, and guaranteed</em> method for minimizing Boolean expressions. Adjacent cells
+                        in the map represent logically adjacent minterms, so grouping them automatically
+                        eliminates variables — no algebra required.
                     </p>
                 </section>
 
+                <!-- ═══════════════════════════════════════════
+                     SECTION 2 – BOOLEAN FUNCTIONS & MINTERMS
+                ════════════════════════════════════════════ -->
                 <section class="theory-section">
-                    <h3>Boolean Functions and Minterms</h3>
+                    <h3>2. Boolean Functions and Minterms</h3>
+                    <hr class="section-divider">
 
                     <p>
-                        A Boolean function is an expression formed using Boolean variables, logical operators
-                        (AND, OR, NOT), and constants. A function can be completely described using its
-                        <strong>minterms</strong>.
+                        A <strong>Boolean function</strong> maps a set of binary input variables to a single
+                        binary output. It can be described completely by a truth table that lists the output for
+                        every possible combination of inputs.
                     </p>
 
                     <p>
-                        A <strong>minterm</strong> is a product (AND) term in which all variables appear exactly
-                        once, either in complemented or uncomplemented form. Each minterm corresponds to one
-                        unique combination of input variables that produces an output of 1.
+                        A <strong>minterm</strong> is a product (AND) term in which every variable appears
+                        exactly once — either in its <em>true</em> (uncomplemented) or <em>complemented</em>
+                        form. Each minterm evaluates to 1 for exactly one row of the truth table.
                     </p>
 
-                    <p><strong>Example: 3-Variable Function F(A, B, C)</strong></p>
+                    <p>
+                        Minterms are numbered using the decimal equivalent of their binary input combination.
+                        For example, for variables A, B, C:
+                    </p>
 
                     <table class="theory-table">
                         <thead>
                             <tr>
-                                <th>Decimal</th>
-                                <th>Binary</th>
-                                <th>Minterm</th>
+                                <th>Minterm No.</th>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>C</th>
+                                <th>Minterm Expression</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>A′B′C′</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>A′B′C</td></tr>
+                            <tr><td>2</td><td>0</td><td>1</td><td>0</td><td>A′BC′</td></tr>
+                            <tr><td>3</td><td>0</td><td>1</td><td>1</td><td>A′BC</td></tr>
+                            <tr><td>4</td><td>1</td><td>0</td><td>0</td><td>AB′C′</td></tr>
+                            <tr><td>5</td><td>1</td><td>0</td><td>1</td><td>AB′C</td></tr>
+                            <tr><td>6</td><td>1</td><td>1</td><td>0</td><td>ABC′</td></tr>
+                            <tr><td>7</td><td>1</td><td>1</td><td>1</td><td>ABC</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        A Boolean function is expressed as the <strong>sum (OR) of all minterms</strong> for
+                        which the output is 1. This is called the <em>canonical Sum of Products</em> form.
+                    </p>
+                </section>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION 3 – CANONICAL SOP
+                ════════════════════════════════════════════ -->
+                <section class="theory-section">
+                    <h3>3. Canonical Sum of Products (SOP)</h3>
+                    <hr class="section-divider">
+
+                    <p>
+                        The <strong>canonical SOP</strong> is a standard way to write a Boolean function as the
+                        logical OR of its minterms. It is unique for any given truth table.
+                    </p>
+
+                    <p>
+                        For a function F(A, B, C) that is 1 for minterms 1, 5, 6, 7, the canonical SOP is:
+                    </p>
+
+                    <p class="formula">F(A, B, C) = Σm(1, 5, 6, 7)</p>
+                    <p class="formula">F = A′B′C + AB′C + ABC′ + ABC</p>
+
+                    <ul>
+                        <li>Every term contains <strong>all</strong> variables (complemented or not).</li>
+                        <li>The expression is <strong>correct but not minimized</strong> — it uses more gates
+                            than necessary.</li>
+                        <li>K-Map minimization reduces this to the simplest equivalent expression.</li>
+                    </ul>
+                </section>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION 4 – NEED FOR MINIMIZATION
+                ════════════════════════════════════════════ -->
+                <section class="theory-section">
+                    <h3>4. Need for Boolean Minimization</h3>
+                    <hr class="section-divider">
+
+                    <p>Minimizing a Boolean expression before building a circuit has direct practical benefits:</p>
+
+                    <table class="theory-table">
+                        <thead>
+                            <tr>
+                                <th>Benefit</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Fewer logic gates</td><td>Smaller chip area and lower manufacturing cost</td></tr>
+                            <tr><td>Less wiring</td><td>Reduced propagation delay → faster circuits</td></tr>
+                            <tr><td>Lower power consumption</td><td>Fewer switching transitions per clock cycle</td></tr>
+                            <tr><td>Higher reliability</td><td>Fewer components means fewer failure points</td></tr>
+                            <tr><td>Easier debugging</td><td>Simpler schematic to trace and verify</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION 5 – KARNAUGH MAP
+                ════════════════════════════════════════════ -->
+                <section class="theory-section">
+                    <h3>5. Karnaugh Map (K-Map)</h3>
+                    <hr class="section-divider">
+
+                    <p>
+                        A <strong>Karnaugh Map</strong> is a two-dimensional grid where each cell represents one
+                        minterm of the Boolean function. The value (0 or 1) placed in each cell is taken directly
+                        from the truth table output for that minterm.
+                    </p>
+
+                    <p>
+                        The key insight is <strong>physical adjacency = logical adjacency</strong>: any two
+                        neighbouring cells differ in exactly one variable. Grouping adjacent 1s therefore
+                        automatically cancels that changing variable, producing a simplified term.
+                    </p>
+
+                    <p>
+                        K-Maps are practical for up to <strong>4 variables</strong> by hand. Beyond that,
+                        algorithmic methods (Quine-McCluskey) are preferred.
+                    </p>
+                </section>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION 6 – GRAY CODE ORDERING
+                ════════════════════════════════════════════ -->
+                <section class="theory-section">
+                    <h3>6. Gray Code Ordering</h3>
+                    <hr class="section-divider">
+
+                    <p>
+                        The rows and columns of a K-Map are labelled using <strong>Gray Code</strong> — a binary
+                        sequence where consecutive values differ by exactly one bit:
+                    </p>
+
+                    <p class="formula">00 → 01 → 11 → 10</p>
+
+                    <p>
+                        This is <strong>not</strong> the same as regular binary counting (00, 01, 10, 11).
+                        Gray code ensures that every pair of adjacent cells in the map is truly logically
+                        adjacent (one-bit difference), making grouping valid.
+                    </p>
+
+                    <div class="warning-box">
+                        <p>
+                            ⚠️ <strong>Common mistake:</strong> If you label rows/columns in regular binary
+                            order, adjacent cells may differ in two bits, making your groups mathematically
+                            wrong. Always use Gray code.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION 7 – K-MAP CONSTRUCTION
+                ════════════════════════════════════════════ -->
+                <section class="theory-section">
+                    <h3>7. K-Map Construction</h3>
+                    <hr class="section-divider">
+
+                    <table class="theory-table">
+                        <thead>
+                            <tr>
+                                <th>Variables</th>
+                                <th>Cells (2ⁿ)</th>
+                                <th>Grid Size</th>
+                                <th>Row Labels</th>
+                                <th>Column Labels</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>2 (A, B)</td><td>4</td><td>2 × 2</td><td>A: 0, 1</td><td>B: 0, 1</td></tr>
+                            <tr><td>3 (A, B, C)</td><td>8</td><td>2 × 4</td><td>A: 0, 1</td><td>BC: 00, 01, 11, 10</td></tr>
+                            <tr><td>4 (A, B, C, D)</td><td>16</td><td>4 × 4</td><td>AB: 00, 01, 11, 10</td><td>CD: 00, 01, 11, 10</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p><strong>Sample: 4-Variable K-Map layout (AB vs CD)</strong></p>
+
+                    <table class="kmap-grid">
+                        <thead>
+                            <tr>
+                                <th>AB \ CD</th>
+                                <th>00</th>
+                                <th>01</th>
+                                <th>11</th>
+                                <th>10</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>001</td>
-                                <td>A′B′C</td>
+                                <td class="row-header">00</td>
+                                <td>m0</td><td>m1</td><td>m3</td><td>m2</td>
                             </tr>
                             <tr>
-                                <td>5</td>
-                                <td>101</td>
-                                <td>AB′C</td>
+                                <td class="row-header">01</td>
+                                <td>m4</td><td>m5</td><td>m7</td><td>m6</td>
                             </tr>
                             <tr>
-                                <td>6</td>
-                                <td>110</td>
-                                <td>ABC′</td>
+                                <td class="row-header">11</td>
+                                <td>m12</td><td>m13</td><td>m15</td><td>m14</td>
                             </tr>
                             <tr>
-                                <td>7</td>
-                                <td>111</td>
-                                <td>ABC</td>
+                                <td class="row-header">10</td>
+                                <td>m8</td><td>m9</td><td>m11</td><td>m10</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <p>
-                        The <strong>Canonical Sum of Products (SOP)</strong> form is obtained by logically OR-ing
-                        all such minterms.
+                        Notice the column order is <strong>00, 01, 11, 10</strong> (Gray code) — not 00, 01,
+                        10, 11. The same applies to rows.
                     </p>
                 </section>
 
+                <!-- ═══════════════════════════════════════════
+                     SECTION 8 – STEP-BY-STEP SOLVING PROCEDURE
+                ════════════════════════════════════════════ -->
                 <section class="theory-section">
-                    <h3>Canonical Sum of Products (SOP)</h3>
+                    <h3>8. Step-by-Step K-Map Solving Procedure</h3>
+                    <hr class="section-divider">
 
                     <p>
-                        The canonical SOP representation expresses a Boolean function as a sum of all minterms
-                        for which the output is 1.
+                        This is the core procedure you will follow in the simulator. Master each step to solve
+                        any K-Map problem systematically.
                     </p>
 
+                    <!-- STEP 1 -->
+                    <div class="step-box">
+                        <div class="step-title">
+                            <span class="step-badge">1</span>
+                            Identify the Number of Variables
+                        </div>
+                        <ul>
+                            <li>Count the variables in the Boolean function: 2, 3, or 4.</li>
+                            <li>This determines the K-Map size: 4, 8, or 16 cells respectively.</li>
+                            <li>Write down the function in Σm notation, e.g. F(A,B,C,D) = Σm(0,1,3,7,8,9).</li>
+                        </ul>
+                    </div>
+
+                    <!-- STEP 2 -->
+                    <div class="step-box">
+                        <div class="step-title">
+                            <span class="step-badge">2</span>
+                            Construct the K-Map Using Gray Code
+                        </div>
+                        <ul>
+                            <li>Draw the grid of the correct size.</li>
+                            <li>Label rows and columns using <strong>Gray Code order</strong> (00, 01, 11, 10).</li>
+                            <li>Each cell position corresponds to one unique minterm number.</li>
+                        </ul>
+                        <div class="tip-box">
+                            <p>💡 <strong>Tip:</strong> The minterm number for any cell = (row binary value) concatenated with (column binary value), read as a single binary number.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div class="step-box">
+                        <div class="step-title">
+                            <span class="step-badge">3</span>
+                            Plot Minterms into the Correct Cells
+                        </div>
+                        <ul>
+                            <li>For each minterm in Σm(…), place a <strong>1</strong> in the corresponding cell.</li>
+                            <li>For don't care conditions (Σd(…)), place an <strong>X</strong>.</li>
+                            <li>Leave all remaining cells as <strong>0</strong> (or blank).</li>
+                        </ul>
+                        <p><strong>Example:</strong> For F(A,B,C) = Σm(1, 5, 6, 7), the filled map looks like:</p>
+
+                        <table class="kmap-grid">
+                            <thead>
+                                <tr>
+                                    <th>A \ BC</th>
+                                    <th>00</th>
+                                    <th>01</th>
+                                    <th>11</th>
+                                    <th>10</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="row-header">0</td>
+                                    <td class="zero">0</td>
+                                    <td class="one">1</td>
+                                    <td class="zero">0</td>
+                                    <td class="zero">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="row-header">1</td>
+                                    <td class="zero">0</td>
+                                    <td class="one">1</td>
+                                    <td class="one">1</td>
+                                    <td class="one">1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- STEP 4 -->
+                    <div class="step-box">
+                        <div class="step-title">
+                            <span class="step-badge">4</span>
+                            Group the 1s
+                        </div>
+                        <ul>
+                            <li>Groups must be <strong>rectangular</strong> and contain <strong>1, 2, 4, 8, or 16</strong> cells (powers of 2).</li>
+                            <li>Always form the <strong>largest possible group</strong> first — bigger groups eliminate more variables.</li>
+                            <li>Groups <strong>may overlap</strong>; a 1 can belong to more than one group.</li>
+                            <li>Groups can <strong>wrap around</strong> the edges of the map (top↔bottom, left↔right).</li>
+                            <li>Every 1 (and every used X) must be covered by at least one group.</li>
+                        </ul>
+
+                        <table class="theory-table">
+                            <thead>
+                                <tr>
+                                    <th>Group Size</th>
+                                    <th>Variables Eliminated</th>
+                                    <th>Variables Remaining</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1 cell</td><td>0</td><td>All n variables</td></tr>
+                                <tr><td>2 cells</td><td>1</td><td>n − 1 variables</td></tr>
+                                <tr><td>4 cells</td><td>2</td><td>n − 2 variables</td></tr>
+                                <tr><td>8 cells</td><td>3</td><td>n − 3 variables</td></tr>
+                                <tr><td>16 cells</td><td>4</td><td>0 variables → constant 1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- STEP 5 -->
+                    <div class="step-box">
+                        <div class="step-title">
+                            <span class="step-badge">5</span>
+                            Eliminate Variables from Each Group
+                        </div>
+                        <ul>
+                            <li>Look at each variable across all cells in the group.</li>
+                            <li>If a variable takes <strong>both 0 and 1</strong> within the group → it <strong>changes</strong> → <strong>eliminate</strong> it.</li>
+                            <li>If a variable is <strong>always 0</strong> → keep it <strong>complemented</strong> (e.g. A′).</li>
+                            <li>If a variable is <strong>always 1</strong> → keep it <strong>uncomplemented</strong> (e.g. A).</li>
+                        </ul>
+
+                        <p><strong>Example:</strong> A group covers minterms 5 (101) and 7 (111) in F(A,B,C):</p>
+                        <table class="theory-table">
+                            <thead>
+                                <tr><th>Minterm</th><th>A</th><th>B</th><th>C</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>5</td><td>1</td><td>0</td><td>1</td></tr>
+                                <tr><td>7</td><td>1</td><td>1</td><td>1</td></tr>
+                                <tr><td><strong>Result</strong></td><td>1 (keep A)</td><td>changes (drop B)</td><td>1 (keep C)</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="formula">Simplified term = AC</p>
+                    </div>
+
+                    <!-- STEP 6 -->
+                    <div class="step-box">
+                        <div class="step-title">
+                            <span class="step-badge">6</span>
+                            Write the Final Simplified Expression
+                        </div>
+                        <ul>
+                            <li>Take the simplified term from <strong>each</strong> group.</li>
+                            <li>OR all the terms together to get the final minimized SOP expression.</li>
+                            <li>Verify that every 1 in the map is covered by at least one group.</li>
+                        </ul>
+
+                        <p><strong>Continuing the example</strong> F(A,B,C) = Σm(1, 5, 6, 7):</p>
+                        <ul>
+                            <li><span class="badge-label">Group 1</span> Minterms 5, 7 → <strong>AC</strong></li>
+                            <li><span class="badge-label">Group 2</span> Minterms 6, 7 → <strong>AB</strong></li>
+                            <li><span class="badge-label">Group 3</span> Minterms 1, 5 → <strong>A′B′C + AB′C</strong> → wait, check: both have B=0, C=1, A differs → <strong>B′C</strong></li>
+                        </ul>
+                        <p class="formula">F = AC + AB + B′C</p>
+                        <div class="tip-box">
+                            <p>💡 This is a much simpler expression than the original canonical SOP with 4 terms of 3 literals each.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION 9 – SPECIAL CASES
+                ════════════════════════════════════════════ -->
+                <section class="theory-section">
+                    <h3>9. Special Cases</h3>
+                    <hr class="section-divider">
+
+                    <h4 style="color:#2c3e50; margin: 18px 0 10px 0; font-size:18px;">Don't Care Conditions</h4>
+                    <p>
+                        Some input combinations may <strong>never occur</strong> in practice (e.g. invalid BCD
+                        codes 10–15), or the output is <strong>irrelevant</strong> for certain inputs. These are
+                        called <strong>don't care conditions</strong> and are marked with <strong>X</strong>
+                        in the K-Map.
+                    </p>
                     <ul>
-                        <li>Each term contains all variables</li>
-                        <li>The expression is unique for a given truth table</li>
-                        <li>It is not minimized and may be complex</li>
+                        <li>Don't cares may be treated as <strong>1</strong> if doing so helps form a larger group.</li>
+                        <li>Don't cares may be treated as <strong>0</strong> and simply ignored.</li>
+                        <li>They are <strong>never required</strong> to be covered — only use them when helpful.</li>
+                    </ul>
+                    <div class="tip-box">
+                        <p>💡 <strong>Strategy:</strong> Always try including don't cares in a group first. If they make the group larger (2→4, 4→8), include them. If not, ignore them.</p>
+                    </div>
+
+                    <h4 style="color:#2c3e50; margin: 18px 0 10px 0; font-size:18px;">Wrap-Around (Edge Adjacency)</h4>
+                    <p>
+                        The K-Map is logically a <strong>torus</strong> (doughnut shape) — the left and right
+                        edges are adjacent, and the top and bottom edges are adjacent.
+                    </p>
+                    <ul>
+                        <li>Cells in the <strong>leftmost column</strong> are adjacent to the <strong>rightmost column</strong>.</li>
+                        <li>Cells in the <strong>top row</strong> are adjacent to the <strong>bottom row</strong>.</li>
+                        <li>All four <strong>corner cells</strong> of a 4-variable map form a valid group of 4.</li>
                     </ul>
 
-                    <p><strong>Example:</strong></p>
-                    <p class="formula">
-                        F = A′B′C + AB′C + ABC′ + ABC
-                    </p>
-
+                    <h4 style="color:#2c3e50; margin: 18px 0 10px 0; font-size:18px;">Overlapping Groups</h4>
                     <p>
-                        Although canonical SOP accurately represents the function, it is inefficient for
-                        circuit implementation due to the large number of gates required.
+                        A cell containing a 1 may be included in <strong>more than one group</strong>. This is
+                        not just allowed — it is sometimes necessary to ensure every 1 is covered by the
+                        <em>largest possible</em> group.
                     </p>
-                </section>
-
-                <section class="theory-section">
-                    <h3>Need for Boolean Minimization</h3>
-
-                    <p>Minimization of Boolean expressions is essential because it:</p>
-
                     <ul>
-                        <li>Reduces the number of logic gates</li>
-                        <li>Decreases circuit complexity</li>
-                        <li>Lowers power consumption</li>
-                        <li>Improves speed and reliability</li>
-                        <li>Reduces hardware cost</li>
-                    </ul>
-
-                    <p>
-                        K-Maps offer an intuitive and reliable method to achieve minimization without complex
-                        Boolean algebra.
-                    </p>
-                </section>
-
-                <section class="theory-section">
-                    <h3>Karnaugh Map (K-Map)</h3>
-
-                    <p>
-                        A Karnaugh Map is a two-dimensional array of cells representing all possible combinations
-                        of Boolean variables. Each cell corresponds to a minterm.
-                    </p>
-
-                    <p>
-                        The arrangement of cells follows <strong>Gray Code ordering</strong>, ensuring that
-                        adjacent cells differ by only one variable. This adjacency property allows grouping of
-                        minterms to eliminate variables during simplification.
-                    </p>
-                </section>
-
-                <section class="theory-section">
-                    <h3>Gray Code Ordering</h3>
-
-                    <p>
-                        Gray Code is a binary numbering system in which consecutive values differ by only one bit.
-                    </p>
-
-                    <p class="formula">00, 01, 11, 10</p>
-
-                    <p>
-                        This ordering ensures that adjacent cells in the K-Map differ in only one variable,
-                        enabling valid grouping.
-                    </p>
-                </section>
-
-                <section class="theory-section">
-                    <h3>K-Map Construction</h3>
-
-                    <ul>
-                        <li><strong>2-Variable K-Map:</strong> 4 cells (2²), arranged in a 2 × 2 grid</li>
-                        <li><strong>3-Variable K-Map:</strong> 8 cells (2³), arranged in a 2 × 4 grid</li>
-                        <li><strong>4-Variable K-Map:</strong> 16 cells (2⁴), arranged in a 4 × 4 grid</li>
+                        <li>Overlapping is valid as long as each group is itself a valid rectangle of power-of-2 size.</li>
+                        <li>A group that is completely covered by other groups is <strong>redundant</strong> and should be removed to keep the expression minimal.</li>
                     </ul>
                 </section>
 
+                <!-- ═══════════════════════════════════════════
+                     SECTION 10 – COMMON MISTAKES
+                ════════════════════════════════════════════ -->
                 <section class="theory-section">
-                    <h3>Grouping Rules in K-Maps</h3>
+                    <h3>10. Common Mistakes to Avoid</h3>
+                    <hr class="section-divider">
+
+                    <table class="theory-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mistake</th>
+                                <th>Why It's Wrong</th>
+                                <th>How to Fix It</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Using regular binary order (00,01,10,11) for labels</td>
+                                <td>Adjacent cells would differ by 2 bits; grouping becomes invalid</td>
+                                <td>Always use Gray code: 00, 01, 11, 10</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Making groups of 3, 5, 6, or other non-power-of-2 sizes</td>
+                                <td>Variable elimination rule only works for powers of 2</td>
+                                <td>Groups must be 1, 2, 4, 8, or 16 cells only</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Choosing small groups when a larger one is possible</td>
+                                <td>Results in more variables in the term; expression not fully simplified</td>
+                                <td>Always look for the largest valid group first</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Forgetting wrap-around adjacency</td>
+                                <td>Misses potential larger groups at the map edges and corners</td>
+                                <td>Always check border cells for wrap-around grouping</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Leaving some 1s ungrouped</td>
+                                <td>Those minterms are not covered; the simplified expression is incorrect</td>
+                                <td>Verify every 1 is in at least one group before writing the answer</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Including 0s inside a group</td>
+                                <td>Groups must contain only 1s (and optionally don't cares)</td>
+                                <td>Recheck cell values; groups cannot span 0-valued cells</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Using a redundant group that is fully covered by others</td>
+                                <td>Adds unnecessary terms; expression is not minimal</td>
+                                <td>Remove any group whose 1s are all already covered by other groups</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION 11 – QUICK SOLVING STRATEGY
+                ════════════════════════════════════════════ -->
+                <section class="theory-section">
+                    <h3>11. Quick Solving Strategy (Exam Tips)</h3>
+                    <hr class="section-divider">
+
+                    <p>Use this checklist every time you solve a K-Map problem:</p>
 
                     <ol>
-                        <li>Groups must contain 1, 2, 4, or 8 cells (powers of two)</li>
-                        <li>Groups can wrap around edges of the K-Map</li>
-                        <li>Each group eliminates one or more variables</li>
-                        <li>The largest possible groups are preferred</li>
-                        <li>Overlapping groups are allowed if they reduce complexity</li>
+                        <li><strong>Count variables</strong> → decide map size (2×2, 2×4, or 4×4).</li>
+                        <li><strong>Draw the grid</strong> with Gray code labels on rows and columns.</li>
+                        <li><strong>Plot minterms</strong> → place 1 for each minterm, X for don't cares, 0 elsewhere.</li>
+                        <li><strong>Find all groups of 8</strong> first (octet) — they give the simplest terms.</li>
+                        <li><strong>Then groups of 4</strong> (quad), then groups of 2 (pair), then singles — always largest first.</li>
+                        <li><strong>Use don't cares</strong> to expand any group if possible.</li>
+                        <li><strong>Check edges and corners</strong> for wrap-around groups.</li>
+                        <li><strong>Remove redundant groups</strong> — if all 1s of a group are already covered, delete it.</li>
+                        <li><strong>Write the simplified term</strong> for each remaining group (keep constant variables, drop changing ones).</li>
+                        <li><strong>OR all terms</strong> together for the final minimized SOP expression.</li>
+                        <li><strong>Double-check</strong> — verify every 1 in the map is covered by your final expression.</li>
                     </ol>
-                </section>
 
-                <section class="theory-section">
-                    <h3>Minimized Sum of Products (SOP)</h3>
+                    <div class="tip-box">
+                        <p>
+                            💡 <strong>Memory trick for Gray code column order:</strong>
+                            "00 → 01 (flip rightmost) → 11 (flip leftmost) → 10 (flip rightmost again)".
+                            This gives you the sequence without memorizing — each step flips exactly one bit.
+                        </p>
+                    </div>
 
-                    <p>After grouping:</p>
-
-                    <ul>
-                        <li>Variables that change within a group are eliminated</li>
-                        <li>Variables that remain constant form the simplified term</li>
-                        <li>The final expression is the OR of all group terms</li>
-                    </ul>
-
-                    <p><strong>Example:</strong></p>
-                    <p class="formula">
-                        F = AB + AC + B′C
-                    </p>
-
-                    <p>
-                        This minimized expression uses fewer gates and is optimal for hardware implementation.
-                    </p>
+                    <div class="warning-box">
+                        <p>
+                            ⚠️ <strong>Final check rule:</strong> Count the total number of 1s in your map.
+                            Then count how many distinct 1s your groups cover. These two numbers must match.
+                            If they don't, you have missed a minterm.
+                        </p>
+                    </div>
                 </section>
 
             </div>
