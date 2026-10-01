@@ -1,7 +1,7 @@
 # 🧩 K-Map Solver
 
 ## 📖 Short Description
-K-Map Solver is an interactive web application that simplifies Boolean expressions using Karnaugh Maps. It provides a guided, step-by-step approach to solving K-Map problems by generating Gray Code-based maps, minimizing Boolean expressions, and visualizing the corresponding logic circuit. The project is designed as both a learning tool and a practical Boolean expression solver. :contentReference[oaicite:0]{index=0}
+K-Map Solver is an interactive web application that simplifies Boolean expressions using Karnaugh Maps. It provides a guided, step-by-step approach to solving K-Map problems by generating Gray Code-based maps, minimizing Boolean expressions, and visualizing the corresponding logic circuit. The project is designed as both a learning tool and a practical Boolean expression solver. 
 
 ---
 
